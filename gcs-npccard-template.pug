@@ -1,0 +1,41 @@
+mixin attr(name)
+    span.gcs-attr-label= name + ": "
+    span.gcs-attr-value
+        = "@" + name
+        span.gcs-points= "[@" + name + "_POINTS]"
+
+mixin tdattr(name)
+    td.gcs-attr-label= name + ": "
+    td.gcs-attr-value
+        = "@" + name
+        span.gcs-points="[@" + name + "_POINTS]"
+
+//- the real code
+div.gcs-npccard(style="width:480px; height:3in; font-size:10pt; background-color:red")
+    img(src="@PORTRAIT", alt="Portrait of @NAME" style="float:left; width:1in")
+    table(style="font-size: 1em;")
+        tr
+            +tdattr("ST")
+            td.gcs-attr-label HP: 
+            td.gcs-attr-value @MAX_HP
+                span.gcs-points [@HP_POINTS]
+        tr
+            +tdattr("DX")
+            +tdattr("PERCEPTION")
+        tr
+            +tdattr("IQ")
+            +tdattr("WILL") 
+        tr
+            +tdattr("HT")
+            +tdattr("FP")
+    p
+        b Traits:
+        | @ADVANTAGES_LOOP_START @DESCRIPTION_PRIMARY@DESCRIPTION_MODIFIER_NOTES_PAREN 
+        span.gcs-points [@POINTS] 
+        | @ADVANTAGES_LOOP_END
+    p
+        b Skills[@SKILL_POINTS]:
+        |  @SKILLS_LOOP_START 
+        |@DESCRIPTION_PRIMARY @DESCRIPTION_NOTES_PAREN-@SL (@RSL)
+        span.gcs-points [@POINTS] 
+        |@SKILLS_LOOP_END
